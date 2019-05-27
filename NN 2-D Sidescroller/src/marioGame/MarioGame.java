@@ -29,7 +29,7 @@ import java.io.*;
 
 final public class MarioGame {
 	public static final int MIDDLE_OF_SCREEN= 400;
-	public static final int TICKS_PER_SECOND= 60;
+	public static final int TICKS_PER_SECOND= 60; //60
 	
 	private static int timeLimit;
 	
@@ -53,7 +53,7 @@ final public class MarioGame {
 	private static int startingNumOfGoombas;
 	
 	final static int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
-	final static int MAX_FRAMESKIP = 3;
+	final static int MAX_FRAMESKIP = 1;
 	
     static double nextGameTick= System.currentTimeMillis(); //Set it up first
     private static int loops;

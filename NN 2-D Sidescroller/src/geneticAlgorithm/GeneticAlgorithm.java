@@ -37,7 +37,9 @@ public class GeneticAlgorithm{
     //else
      //g.weights[i]-= Math.random()*(g.weights[i]-bestOne.weights[i]);
     //g.weights[i]= bestOne.weights[i];
-    g.weights[i]= (Math.random()*2-1)*MAX_PERTURBUTION;
+    g.weights[i]+= (Math.random()*2-1)*MAX_PERTURBUTION;
+    g.weights[i] = Math.max(g.weights[i], 0);
+    g.weights[i] = Math.min(g.weights[i], 1);
    }
  }
  
@@ -51,7 +53,7 @@ public class GeneticAlgorithm{
   Genome theOne= new Genome(numWeights);
   int fitnessSoFar= 0;
   
-  while(true) { //Keep going until we return something
+  //while(true) { //Keep going until we return something
    for(int i= 0; i<population.size(); i++) {
     fitnessSoFar+= population.get(i).fitness;
     
@@ -61,7 +63,8 @@ public class GeneticAlgorithm{
      return theOne;
     }
    }
-  }
+   return null;
+  //}
  }
  
  public void crossover(Genome baby1, Genome baby2, Genome mom, Genome dad) {
