@@ -1,5 +1,12 @@
 Release: 2017/09/08
-Version 1.2: 2017/11/16
+Version 1.3: 2019/5/27
+_________________________________________________________________
+~Version 1.3:
+-Updated the physics of the platformer for the player to collide better
+-Lowered the allowed # of frame skips
+-Bug fix with the mutation process
+-Raised default mutation rate
+-Added option to not render simulation to screen for a mario game run (To be improved)
 _________________________________________________________________
 ~Version 1.2:
 -Reverted genetic algorithm back to stable release version
