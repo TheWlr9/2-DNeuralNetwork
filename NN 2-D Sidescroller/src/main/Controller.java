@@ -34,7 +34,7 @@ public class Controller {
 				//loop the Marios running each individually at different times
 				for(Player p : MarioGame.players) {
 					while(!MarioGame.gameOver)
-						MarioGame.processAndRun(p); //Only shows one Mario at a time.
+						MarioGame.processAndRun(p, true); //Only shows one Mario at a time.
 					thePopulation.get(index).setFitness(p.fitness); //Save the fitness score to the genome array
 					MarioGame.reset();
 					
