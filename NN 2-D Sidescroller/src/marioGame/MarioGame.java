@@ -29,7 +29,7 @@ import java.io.*;
 
 final public class MarioGame {
 	public static final int MIDDLE_OF_SCREEN= 400;
-	public static final int TICKS_PER_SECOND= 60;
+	public static final int TICKS_PER_SECOND= 60; //60
 	
 	private static int timeLimit;
 	
@@ -53,7 +53,7 @@ final public class MarioGame {
 	private static int startingNumOfGoombas;
 	
 	final static int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
-	final static int MAX_FRAMESKIP = 3;
+	final static int MAX_FRAMESKIP = 1;
 	
     static double nextGameTick= System.currentTimeMillis(); //Set it up first
     private static int loops;
@@ -154,7 +154,7 @@ final public class MarioGame {
 	 * Runs the game.
 	 * @param PLAYER The Mario you want to run
 	 */
-	final public static void processAndRun(Player PLAYER) {
+	final public static void processAndRun(Player PLAYER, boolean displayRun) {
 		if(time<0 || PLAYER.getY()<0)
         	gameOver= true;
         else
@@ -162,11 +162,14 @@ final public class MarioGame {
 		
 		if(gameOver) {
 			//PLAYER.fitness= PLAYER.getX();
-			displayDeathScreen();
+			if(displayRun)
+				displayDeathScreen();
 		}
     	else {
-	    	StdDraw.clear(); //Clear the screen for animation
-	    	StdDraw.setFont(TIMER_FONT);
+    		if(displayRun) {
+		    	StdDraw.clear(); //Clear the screen for animation
+		    	StdDraw.setFont(TIMER_FONT);
+    		}
 	        loops = 0;
 	        
 	        while (System.currentTimeMillis() > nextGameTick
@@ -206,18 +209,20 @@ final public class MarioGame {
 		        	time--;
 	        }
 	        
-	        /*Draw shit*/
-	        StdDraw.text(MIDDLE_OF_SCREEN*2, MIDDLE_OF_SCREEN*2, time.toString());
-	        StdDraw.text(0, 750, "ID: "+PLAYER.ID.toString());
-	        StdDraw.text(0,700,"Y: "+(int)PLAYER.getY());
-	        StdDraw.text(0, 650, "X: "+(int)PLAYER.getX());
-	        //Maybe add generation count somehow?
-	        
-	        PLAYER.draw();
-	        for(Toucheable i : objects)
-	        	i.draw();
-	        
-	        StdDraw.show(0); //Display the objects on-screen for animation
+	        if(displayRun) {
+	        	/*Draw shit*/
+	        	StdDraw.text(MIDDLE_OF_SCREEN*2, MIDDLE_OF_SCREEN*2, time.toString());
+	        	StdDraw.text(0, 750, "ID: "+PLAYER.ID.toString());
+	        	StdDraw.text(0,700,"Y: "+(int)PLAYER.getY());
+	        	StdDraw.text(0, 650, "X: "+(int)PLAYER.getX());
+	        	//Maybe add generation count somehow?
+	        	
+	        	PLAYER.draw();
+	        	for(Toucheable i : objects)
+	        		i.draw();
+	        	
+	        	StdDraw.show(0); //Display the objects on-screen for animation
+	        }
 	        
 	        /*Reset some things.*/
 	        PLAYER.setJumping(false);

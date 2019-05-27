@@ -133,8 +133,7 @@ final public class Player {
 		}
 		xCor+= xSpeed;
 		yCor+= ySpeed;
-		fitness= xCor;
-		fitness= Math.max(fitness, 0);
+		fitness= Math.max(xCor - startingX, 0);
 		
 		movePlayer(xSpeed,ySpeed); //Update him
 	}
@@ -183,7 +182,7 @@ final public class Player {
 
 		if(!underPlayer.isEmpty()) {
 			for(Ground g : underPlayer) {
-				if(!isTouching(g)) {
+				if(!isTouching(g) && !isTouching(new Ground(g.getX(), g.getY() + 2))) {
 					if(doAgain) { /*This is just to prevent the fall
 						method to be called twice, therefore forcing the Player
 						 to fall twice as fast.*/
@@ -195,40 +194,46 @@ final public class Player {
 					if(new Player(x,y+HEIGHT/2.0).isTouching(g)) { //Is this block blocking the Player's way?
 						
 						/*Test to see which side the wall block is on*/
-						if(new Player(x+WIDTH/2.0,y+HEIGHT/2.0).isTouching(g) && directionHeaded==RIGHT) {
+						if(new Player(x+xSpeed,y+HEIGHT/2.0).isTouching(g) && directionHeaded==RIGHT) {
 							directionHeaded= HALT;
 							
 							//This is to stop Mario from clipping inside the wall
 							while(isTouching(g)) {
 								movePlayer(-1,ySpeed,g);
-								movePlayer(-1,ySpeed);
+								movePlayer(-1, ySpeed);
 								xCor+= -1;
+								xSpeed = 0;
 								yCor+= ySpeed;
 							}
 						}
-						else if(new Player(x-WIDTH/2.0,y+HEIGHT/2.0).isTouching(g) && directionHeaded==LEFT) {
+						else if(new Player(x-xSpeed,y+HEIGHT/2.0).isTouching(g) && directionHeaded==LEFT) {
 							directionHeaded= HALT;
 							
 							//This is to stop Mario from clipping inside the wall
 							while(isTouching(g)) {
-								movePlayer(1,ySpeed);
 								movePlayer(1,ySpeed,g);
+								movePlayer(1, ySpeed);
 								xCor+= 1;
+								xSpeed = 0;
+								yCor+= ySpeed;
 							}
 						}
 					}
 					else if(jumping) {
 						setSpeed(xSpeed, MAX_VELOCITY*1.5);
+						movePlayer(xSpeed, ySpeed);
 					}
 					else {
 						yAcceleration= 0;
 						
 						//This is to stop Mario from clipping inside the ground
 						while(isTouching(g) && falling) {
-							movePlayer(0,-1*ySpeed,g);
-							movePlayer(0,-1*ySpeed);
-							yCor+= -1*ySpeed;
+							movePlayer(xSpeed, 1, g);
+							movePlayer(xSpeed, 1);
+							yCor+= 1;
 						}
+						//movePlayer(0, -1);
+						//yCor+= -1;
 						
 						setSpeed(xSpeed, 0);
 						

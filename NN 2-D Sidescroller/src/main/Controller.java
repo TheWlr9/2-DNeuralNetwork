@@ -11,7 +11,7 @@ public class Controller {
 	final static int NUM_OF_HIDDEN_LAYERS= 1;
 	final static int NUM_OF_NEURONS_PER_HL= 9; //To be changed whenever you want to experiement
 	final static int POP_SIZE= 30;
-	final static double MUTATION_RATE= 0.1;
+	final static double MUTATION_RATE= 0.7;
 	final static double CROSSOVER_RATE= 0.3;
 	final static int NUM_OF_WEIGHTS= (int)(NUM_OF_INPUTS*NUM_OF_NEURONS_PER_HL+Math.pow(NUM_OF_NEURONS_PER_HL,2)*(NUM_OF_HIDDEN_LAYERS-1)+NUM_OF_NEURONS_PER_HL*NUM_OF_OUTPUTS);
 	static ArrayList<Genome> thePopulation= new ArrayList<Genome>();
@@ -34,7 +34,7 @@ public class Controller {
 				//loop the Marios running each individually at different times
 				for(Player p : MarioGame.players) {
 					while(!MarioGame.gameOver)
-						MarioGame.processAndRun(p); //Only shows one Mario at a time.
+						MarioGame.processAndRun(p, true); //Only shows one Mario at a time.
 					thePopulation.get(index).setFitness(p.fitness); //Save the fitness score to the genome array
 					MarioGame.reset();
 					
